@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MHA 635: Research Methods — UNLV</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body, #root { height: 100%; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: #f5f5f5; }
+
+    /* Accordion content tables and lists */
+    .accordion-body table { width: 100%; border-collapse: collapse; font-size: 0.85em; margin-top: 8px; }
+    .accordion-body th, .accordion-body td { border: 1px solid #ddd; padding: 6px 8px; text-align: left; }
+    .accordion-body th { background: #f5f5f5; }
+    .accordion-body ul, .accordion-body ol { padding-left: 20px; margin: 6px 0; }
+    .accordion-body li { margin-bottom: 5px; line-height: 1.6; }
+    .accordion-body p { margin-bottom: 8px; }
+    .accordion-body strong { color: #1a1a1a; }
+    .accordion-body em { color: #555; }
+
+    /* Model body */
+    .model-body p { margin-bottom: 10px; }
+    .model-body strong { color: #B0202A; }
+
+    /* Sidebar scroll */
+    nav::-webkit-scrollbar { width: 4px; }
+    nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+
+    /* Nav hover */
+    nav button:hover { background: rgba(255,255,255,0.08) !important; color: #fff !important; }
+    nav button.active-nav { background: rgba(176,32,42,0.5) !important; color: #fff !important; }
+
+    /* Module nav button hover */
+    .week-nav-btn:hover:not(:disabled) { background: #B0202A !important; color: #fff !important; }
+    .week-nav-btn:disabled { opacity: 0.35; cursor: not-allowed !important; }
+
+    /* Check row hover */
+    .check-row:hover { background: #fff5f5 !important; }
+
+    /* Score button hover */
+    .score-btn:hover { border-color: #B0202A !important; color: #B0202A !important; }
+
+    /* Module row hover */
+    .week-row:hover { background: #fdf3f3 !important; }
+
+    /* Textarea focus */
+    textarea:focus, input:focus { outline: 2px solid #B0202A; border-color: #B0202A !important; }
+
+    /* Rubric option hover */
+    .rubric-option:hover { border-color: #B0202A !important; }
+
+    /* Accordion btn hover */
+    .accordion-btn:hover { background: #f5f5f5 !important; }
+
+    /* Loading */
+    #loading { position: fixed; inset: 0; background: #1a1a2e; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; z-index: 9999; }
+    #loading .logo { color: #fff; font-size: 2rem; font-family: Georgia, serif; font-weight: 700; }
+    #loading .sub { color: rgba(255,255,255,0.6); font-size: 14px; }
+    #loading .bar-wrap { width: 200px; height: 4px; background: rgba(255,255,255,0.15); border-radius: 4px; overflow: hidden; }
+    #loading .bar { height: 100%; background: #B0202A; border-radius: 4px; animation: load 1.2s ease-in-out forwards; }
+    @keyframes load { from { width: 0 } to { width: 100% } }
+
+    @media (max-width: 700px) {
+      nav { position: fixed !important; top: 0; bottom: 0; left: 0; transform: translateX(-100%); }
+      nav.open { transform: translateX(0) !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="loading">
+  <div class="logo">MHA 635</div>
+  <div class="sub">Loading course content…</div>
+  <div class="bar-wrap"><div class="bar"></div></div>
+</div>
+
+<div id="root"></div>
+
+<!-- React + Babel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<!-- Course data (plain JS — no JSX) -->
+<script src="course-data.js"></script>
+
+<!-- React components (Babel/JSX) -->
+<script type="text/babel" src="WeekView.jsx"></script>
+<script type="text/babel" src="SidePanel.jsx"></script>
+<script type="text/babel" src="PortfolioView.jsx"></script>
+<script type="text/babel" src="app.jsx"></script>
+
+<script>
+  // Hide loading screen once React mounts
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      var el = document.getElementById('loading');
+      if (el) { el.style.transition = 'opacity 0.4s'; el.style.opacity = '0'; setTimeout(function(){ el.style.display='none'; }, 400); }
+    }, 1200);
+  });
+
+  // Add CSS class helpers for hover states that React inline styles can't do
+  document.addEventListener('DOMContentLoaded', function() {
+    document.body.addEventListener('click', function(e) {
+      // Close mobile menu on outside click handled by React overlay
+    });
+  });
+</script>
+
+</body>
+</html>
